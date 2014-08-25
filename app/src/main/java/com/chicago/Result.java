@@ -26,16 +26,20 @@ public class Result extends Activity {
             Log.d("Amount -----*******-----", intent.getStringExtra("Amount"));
 
             DataBase dataBase = new DataBase(this);
-            SparseArray<Group> sparseArray=dataBase.RetrievingRD(columns,  Amount);
-           /* if(duration=="All"){
+            SparseArray<Group> sparseArray;
+            if(duration.equals("All")){
                 sparseArray= dataBase.RetrievingRD(columns,  Amount);
+                ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandable);
+                ExpandableAdapter adapter = new ExpandableAdapter(this, sparseArray);
+                expandableListView.setAdapter(adapter);
             }
             else {
                 sparseArray= dataBase.RetrievingRD(columns, duration, Amount);
-            }*/
-            ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandable);
-            ExpandableAdapter adapter = new ExpandableAdapter(this, sparseArray);
-            expandableListView.setAdapter(adapter);
+                ExpandableListView expandableListView = (ExpandableListView) findViewById(R.id.expandable);
+                ExpandableAdapter adapter = new ExpandableAdapter(this, sparseArray);
+                expandableListView.setAdapter(adapter);
+            }
+
         }
         catch (Exception ex){
             Log.d("Eexception -----********----",ex.getMessage());

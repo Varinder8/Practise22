@@ -89,11 +89,14 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
             if (convertView == null) {
                 convertView = layoutInflater.inflate(R.layout.listrow_details, null);
             }
-            TextView textViewMonthly = (TextView) convertView.findViewById(R.id.txtViewMonthly);
-            textViewMonthly.setText("Monthly - " + childObject.Monthly);
+            TextView txtFirstColumn = (TextView) convertView.findViewById(R.id.txtFirstColumn);
+            txtFirstColumn.setText(childObject.FirstColumn);
 
-            TextView textViewQuarterly = (TextView) convertView.findViewById(R.id.txtQuarterly);
-            textViewQuarterly.setText("Quarterly - " + childObject.Quarterly);
+            TextView txtSecondColumn = (TextView) convertView.findViewById(R.id.txtSecondColumn);
+            txtSecondColumn.setText(childObject.SecondColumn);
+
+            TextView txtThirdColumn = (TextView) convertView.findViewById(R.id.txtThirdColumn);
+            txtThirdColumn.setText(childObject.ThirdColumn);
 
             ImageView imgSeeMore = (ImageView) convertView.findViewById(R.id.ImgseeMore);
             imgSeeMore.setOnClickListener(new View.OnClickListener() {

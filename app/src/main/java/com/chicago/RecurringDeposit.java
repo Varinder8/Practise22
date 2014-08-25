@@ -29,6 +29,10 @@ public class RecurringDeposit extends Model {
     @Column (name = "Years")
     int Years;
 
+    String FirstColumn;
+    String SecondColumn;
+    String ThirdColumn;
+
     // endregion
 
     // region Constructors

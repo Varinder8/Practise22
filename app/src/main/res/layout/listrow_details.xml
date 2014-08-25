@@ -8,10 +8,10 @@
 
     <!-- Title Of Song-->
     <TextView
-        android:id="@+id/txtViewMonthly"
+        android:id="@+id/txtFirstColumn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="Monthly"
         android:textColor="#040404"
         android:typeface="sans"
         android:textSize="15dip"
@@ -19,20 +19,42 @@
 
     <!-- Artist Name -->
     <TextView
-        android:id="@+id/txtQuarterly"
+        android:id="@+id/txtSecondColumn"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtViewMonthly"
         android:textColor="#343434"
         android:textSize="10dip"
-        android:layout_marginTop="1dip"
-        android:text="" />
+        android:text="Quaterly"
+        android:layout_below="@+id/txtFirstColumn"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/txtThirdColumn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#343434"
+        android:textSize="10dip"
+        android:text="Hal yearly"
+        android:layout_above="@+id/txtMore"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/txtMore"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#343434"
+        android:textSize="10dip"
+        android:text="See More ....."
+        android:layout_below="@+id/ImgseeMore"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
     <!-- Img see More -->
     <ImageView android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher"
+        android:src="@drawable/see_more"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:id="@+id/ImgseeMore"/>

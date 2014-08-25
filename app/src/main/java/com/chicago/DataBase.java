@@ -8,6 +8,8 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.widget.Toast;
 
+import com.activeandroid.query.Select;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,6 +89,7 @@ public class DataBase extends SQLiteOpenHelper {
 
     public List<String> GetDuration(){
         List<String> durationList = new ArrayList<String>();
+        durationList.add("All");
         durationList.add("2");
         durationList.add("3");
         durationList.add("4");
@@ -140,52 +143,122 @@ public class DataBase extends SQLiteOpenHelper {
 
     public SparseArray<Group> RetrievingRD(String columnName ,String Amount){
         SparseArray<Group> groupList =new SparseArray<Group>();
-        groupList= RetrievingRD(columnName,Amount,"2",groupList,">");
-        groupList= RetrievingRD(columnName,Amount,"2",groupList,"=");
-        groupList= RetrievingRD(columnName,Amount,"2",groupList,"<");
+List<RecurringDeposit> recurringDepositList = new ArrayList<RecurringDeposit>();
 
-        groupList= RetrievingRD(columnName,Amount,"3",groupList,">");
-        groupList= RetrievingRD(columnName,Amount,"3",groupList,"=");
-        groupList= RetrievingRD(columnName,Amount,"3",groupList,"<");
+        Group group= new Group();
+        group.groupName="2 Years";
+        recurringDepositList= RetrievingRD(columnName,Amount,"2","<",recurringDepositList,"desc");
+        recurringDepositList= RetrievingRD(columnName,Amount,"2","=",recurringDepositList,"");
+        recurringDepositList= RetrievingRD(columnName,Amount,"2",">",recurringDepositList,"");
+        group.childList=recurringDepositList;
+        if(recurringDepositList.size()>0){
+            groupList.append(groupList.size(),group);
+        }
 
-        groupList= RetrievingRD(columnName,Amount,"4",groupList,">");
-        groupList= RetrievingRD(columnName,Amount,"4",groupList,"=");
-        groupList= RetrievingRD(columnName,Amount,"4",groupList,"<");
+        recurringDepositList = new ArrayList<RecurringDeposit>();
+        group= new Group();
+        group.groupName="3 Years";
+        recurringDepositList= RetrievingRD(columnName,Amount,"3","<",recurringDepositList,"desc");
+        recurringDepositList= RetrievingRD(columnName,Amount,"3","=",recurringDepositList,"");
+        recurringDepositList= RetrievingRD(columnName,Amount,"3",">",recurringDepositList,"");
+        group.childList=recurringDepositList;
+        if(recurringDepositList.size()>0){
+            groupList.append(groupList.size(),group);
+        }
 
-        groupList= RetrievingRD(columnName,Amount,"5",groupList,">");
-        groupList= RetrievingRD(columnName,Amount,"5",groupList,"=");
-        groupList= RetrievingRD(columnName,Amount,"5",groupList,"<");
+        recurringDepositList = new ArrayList<RecurringDeposit>();
+        group= new Group();
+        group.groupName="4 Years";
+        recurringDepositList= RetrievingRD(columnName,Amount,"4","<",recurringDepositList,"desc");
+        recurringDepositList= RetrievingRD(columnName,Amount,"4","=",recurringDepositList,"");
+        recurringDepositList= RetrievingRD(columnName,Amount,"4",">",recurringDepositList,"");
+        group.childList=recurringDepositList;
+        if(recurringDepositList.size()>0){
+            groupList.append(groupList.size(),group);
+        }
 
-        groupList= RetrievingRD(columnName,Amount,"6",groupList,">");
-        groupList= RetrievingRD(columnName,Amount,"6",groupList,"=");
-        groupList= RetrievingRD(columnName,Amount,"6",groupList,"<");
 
-        groupList= RetrievingRD(columnName,Amount,"7",groupList,">");
-        groupList= RetrievingRD(columnName,Amount,"7",groupList,"=");
-        groupList= RetrievingRD(columnName,Amount,"7",groupList,"<");
+
+        recurringDepositList = new ArrayList<RecurringDeposit>();
+        group= new Group();
+        group.groupName="5 Years";
+        recurringDepositList= RetrievingRD(columnName,Amount,"5","<",recurringDepositList,"desc");
+        recurringDepositList= RetrievingRD(columnName,Amount,"5","=",recurringDepositList,"");
+        recurringDepositList= RetrievingRD(columnName,Amount,"5",">",recurringDepositList,"");
+        group.childList=recurringDepositList;
+        if(recurringDepositList.size()>0){
+            groupList.append(groupList.size(),group);
+        }
+
+
+        recurringDepositList = new ArrayList<RecurringDeposit>();
+        group= new Group();
+        group.groupName="6 Years";
+        recurringDepositList= RetrievingRD(columnName,Amount,"6","<",recurringDepositList,"desc");
+        recurringDepositList= RetrievingRD(columnName,Amount,"6","=",recurringDepositList,"");
+        recurringDepositList= RetrievingRD(columnName,Amount,"6",">",recurringDepositList,"");
+        group.childList=recurringDepositList;
+        if(recurringDepositList.size()>0){
+            groupList.append(groupList.size(),group);
+        }
+
+        recurringDepositList = new ArrayList<RecurringDeposit>();
+        group= new Group();
+        group.groupName="7 Years";
+        recurringDepositList= RetrievingRD(columnName,Amount,"7","<",recurringDepositList,"desc");
+        recurringDepositList= RetrievingRD(columnName,Amount,"7","=",recurringDepositList,"");
+        recurringDepositList= RetrievingRD(columnName,Amount,"7",">",recurringDepositList,"");
+        group.childList=recurringDepositList;
+        if(recurringDepositList.size()>0){
+            groupList.append(groupList.size(),group);
+        }
         return  groupList;
     }
 
-    SparseArray<Group> RetrievingRD(String columnName ,String Amount,String years,SparseArray<Group> groupList,String sign ){
+    List<RecurringDeposit>  RetrievingRD(String columnName ,String Amount,String years,String sign
+            ,List<RecurringDeposit> recurringDepositList, String orderBy ){
         String qry ="select * from RecurringDeposit where ("+columnName+" "+sign+" "+Amount+" ) " +
-                "and Years ="+years+" order by "+columnName+" limit 1";
+                "and Years ="+years+" order by "+columnName+" "+orderBy+" limit 1";
 
         Log.e("Qry *****----******* ",qry);
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor= db.rawQuery(qry,null);
+            Group group = new Group();
         if(cursor!=null & cursor.getCount()>0){
-            groupList= MakingSparseArray(years,cursor,groupList);
+            recurringDepositList= MakingSparseArray(years,cursor,recurringDepositList, columnName);
         }
         cursor.close();
         db.close();
-        return  groupList;
+        return  recurringDepositList;
     }
 
-    SparseArray<Group> MakingSparseArray(String years,Cursor cursor,SparseArray<Group> groupList){
-        Group group = new Group(years+" years");
+    List<RecurringDeposit> MakingSparseArray(String years,Cursor cursor,List<RecurringDeposit> recurringDepositList, String columns ){
         while (cursor.moveToNext()){
             RecurringDeposit recurringDeposit = new RecurringDeposit();
+            if(columns.toLowerCase().equals("Monthly".toLowerCase())){
+                recurringDeposit.FirstColumn="Monthly - "+Integer.parseInt(cursor.getString(1));
+                recurringDeposit.SecondColumn="Quarterly - "+Integer.parseInt(cursor.getString(2));
+                recurringDeposit.ThirdColumn="HalfYearly - "+Integer.parseInt(cursor.getString(3));
+            }
+
+            if(columns.toString().toLowerCase().equals("Quarterly".toString().toLowerCase())){
+                recurringDeposit.FirstColumn="Quarterly - "+Integer.parseInt(cursor.getString(2));
+                recurringDeposit.SecondColumn="Monthly - "+Integer.parseInt(cursor.getString(1));
+                recurringDeposit.ThirdColumn="HalfYearly - "+Integer.parseInt(cursor.getString(3));
+            }
+
+            if(columns.equals("HalfYearly")){
+                recurringDeposit.FirstColumn="HalfYearly - "+Integer.parseInt(cursor.getString(3));
+                recurringDeposit.SecondColumn="Monthly - "+Integer.parseInt(cursor.getString(1));
+                recurringDeposit.ThirdColumn="Quarterly - "+Integer.parseInt(cursor.getString(2));
+            }
+
+            if(columns.equals("Yearly")){
+                recurringDeposit.FirstColumn="Yearly - "+Integer.parseInt(cursor.getString(4));
+                recurringDeposit.SecondColumn="Monthly - "+Integer.parseInt(cursor.getString(1));
+                recurringDeposit.ThirdColumn="Quarterly - "+Integer.parseInt(cursor.getString(2));
+            }
             recurringDeposit.Monthly =Integer.parseInt(cursor.getString(1));
             recurringDeposit.Quarterly=Integer.parseInt(cursor.getString(2));
             recurringDeposit.HalfYearly=Integer.parseInt(cursor.getString(3));
@@ -193,10 +266,9 @@ public class DataBase extends SQLiteOpenHelper {
             recurringDeposit.FundValue=Integer.parseInt(cursor.getString(5));
             recurringDeposit.Maturity=Integer.parseInt(cursor.getString(6));
             recurringDeposit.Years =Integer.parseInt(cursor.getString(7));
-            group.childList.add(recurringDeposit);
+            recurringDepositList.add(recurringDeposit);
         }
-        groupList.append(groupList.size(),group);
-        return groupList;
+        return recurringDepositList;
     }
 
    void InsertAllDeposits(){
